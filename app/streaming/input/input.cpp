@@ -41,7 +41,7 @@ SdlInputHandler::SdlInputHandler(StreamingPreferences& prefs, int streamWidth, i
     }
 
     // SDL3 breaks our auto-capture-on-leave logic because the mouse focus has already
-    // been lost by the time we attempt to call SDL_CaptureMouse(). Fortunately, SDL3's
+    // been lost by the time we attempt to call  SDL_CaptureMouse(). Fortunately, SDL3's
     // own auto-capture logic seems to be stable now (unlike SDL2), so we can rely on
     // that instead of our own hack when running on sdl2-compat.
     // https://github.com/libsdl-org/SDL/commit/e54001b02809dcebbb822bd0297919c8c76976a1
@@ -218,6 +218,10 @@ SdlInputHandler::SdlInputHandler(StreamingPreferences& prefs, int streamWidth, i
 
 SdlInputHandler::~SdlInputHandler()
 {
+#ifdef Q_OS_WIN32
+    removeWin32PenHook();
+#endif
+
     for (int i = 0; i < MAX_GAMEPADS; i++) {
         if (m_GamepadState[i].mouseEmulationTimer != 0) {
             Session::get()->notifyMouseEmulationMode(false);
@@ -268,6 +272,11 @@ SdlInputHandler::~SdlInputHandler()
 void SdlInputHandler::setWindow(SDL_Window *window)
 {
     m_Window = window;
+
+#ifdef Q_OS_WIN32
+    removeWin32PenHook();
+    installWin32PenHook();
+#endif
 }
 
 void SdlInputHandler::notifyFocusLost()
