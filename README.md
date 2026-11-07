@@ -84,7 +84,7 @@ Moonlight builds for Steam Link are subject to hardware limitations of the Steam
 
 ### Docker containers
 If you want to use Docker for building, look at [this repo](https://github.com/cgutman/moonlight-packaging) containing canonical containers
-for different architectures, which handle building deps and extra linking for you.
+for different architectures, which handle building deps and extra linking for you
 
 ### Build Setup Steps
 1. Install the latest Qt SDK (and optionally, the Qt Creator IDE) from https://www.qt.io/download
@@ -103,7 +103,7 @@ for different architectures, which handle building deps and extra linking for yo
     * To build from the command line for development use on macOS or Linux, run `qmake6 moonlight-qt.pro` then `make debug` or `make release`.
         * The final binary will be placed in `app/moonlight`.
     * To create an embedded build for a single-purpose device, use `qmake6 "CONFIG+=embedded" moonlight-qt.pro` and build normally.
-        * This build will lack windowed mode, Discord/Help links, and other features that don't make sense on an embedded device.
+        * This build will lack windowed mode, Discord/Help links, and other features that don't make sense for an embedded device.
         * For platforms with poor GPU performance, add `"CONFIG+=gpuslow"` to prefer direct KMSDRM rendering over GL/Vulkan renderers. Direct KMSDRM rendering can use dedicated YUV/RGB conversion and scaling hardware rather than slower GPU shaders for these operations.
 
 ## Contribute
